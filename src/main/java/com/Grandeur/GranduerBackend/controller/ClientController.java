@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController   // Specifying it as a rest controller //
-@RequestMapping("/api/clients") // path/ Map to access the Api //
+@RequestMapping("/api/v1/clients") // path/ Map to access the Api //
 public class ClientController {
-
     private final ClientService clientService;
 
     @Autowired // dependency injection //
@@ -21,13 +20,13 @@ public class ClientController {
     }
 
     // api path to get all the clients //  GET Request //
-    @GetMapping("/get/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Client>> getAllClients(){ // Getting all the Clients from the Client service //
         return new ResponseEntity<>(this.clientService.getAllClients(), HttpStatus.OK); // Creating a new response entity from Clients and passing the response code along with it //
     }
 
     // api path to get the user based on the provided id //  GET Request //
-    @GetMapping("/get/{id}")  // getting a user by specific id //
+    @GetMapping("/{id}")  // getting a user by specific id //
     public ResponseEntity<Client> getClientById(@PathVariable("id") Long id){ // getting the id from mapped request //
         Client client = this.clientService.getClientById(id); // Getting the user from the user service //
         return new ResponseEntity<>(client,HttpStatus.OK); // Creating a new response entity from users and passing the response code along with it //

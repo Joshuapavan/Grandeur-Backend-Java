@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GranduerBackendApplication {
+public class GrandeurBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GranduerBackendApplication.class, args);
+		SpringApplication.run(GrandeurBackendApplication.class, args);
 	}
 
 }
