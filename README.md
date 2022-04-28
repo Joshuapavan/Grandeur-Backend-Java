@@ -6,7 +6,7 @@ Prerequisites to Run The Backend.
 
 1. Have no servers running on port 8080
 2. set the username and password for the Database in application.properities(path : src->main->resources->application.properities.)
-3. Create a database for the CRUD operations to happen.
+3. Create a database with the name Grandeur, for the CRUD operations to happen.
 
 API End points : 
 Registration/ Signup -> (POST) http://localhost:8080/api/v1/registration
