@@ -12,10 +12,10 @@ API End points :
 Registration/ Signup -> (POST) http://localhost:8080/api/v1/registration
 
 Client APIs -> (GET/POST) http://localhost:8080/api/v1/clients
-            -> (GET/PATCH) http://localhost:8080/api/v1/clients/{id}
+Client APIs -> (GET/PATCH) http://localhost:8080/api/v1/clients/{id}
 
 Cars API -> (GET/POST) http://localhost:8080/api/v1/cars or http://localhost:8080/api/v1/cars/{id}
-         -> (GET) http://localhost:8080/api/v1/cars/{name} (name = brandName)
+Cars API -> (GET) http://localhost:8080/api/v1/cars/{name} (name = brandName)
          
 Car Images API -> (POST) http://localhost:8080/api/v1/cars/{id}/images 
 
