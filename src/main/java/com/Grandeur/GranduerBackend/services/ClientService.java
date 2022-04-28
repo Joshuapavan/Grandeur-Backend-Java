@@ -4,7 +4,6 @@ import com.Grandeur.GranduerBackend.models.Client;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface ClientService{

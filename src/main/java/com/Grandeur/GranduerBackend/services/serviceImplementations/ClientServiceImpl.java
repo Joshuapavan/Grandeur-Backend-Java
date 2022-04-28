@@ -1,11 +1,12 @@
-package com.Grandeur.GranduerBackend.services.impl;
+package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
-import com.Grandeur.GranduerBackend.Repository.ClientRepo;
+import com.Grandeur.GranduerBackend.repository.ClientRepo;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
 import com.Grandeur.GranduerBackend.exceptions.EmailAlreadyTakenException;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.services.ClientService;
+import com.Grandeur.GranduerBackend.registrationServices.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +26,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final  ConfirmationTokenService confirmationTokenService;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public List<Client> getAllClients() {
@@ -56,7 +57,8 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return this.clientRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email "+email+" does not exist!"));
+        return this.clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email "+email+" does not exist!"));
     }
 
     public String signUpClient(Client client) {

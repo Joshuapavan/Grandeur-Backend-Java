@@ -1,6 +1,6 @@
-package com.Grandeur.GranduerBackend.services.impl;
+package com.Grandeur.GranduerBackend.registrationServices;
 
-import com.Grandeur.GranduerBackend.Repository.ConfirmationTokenRepository;
+import com.Grandeur.GranduerBackend.repository.ConfirmationTokenRepository;
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

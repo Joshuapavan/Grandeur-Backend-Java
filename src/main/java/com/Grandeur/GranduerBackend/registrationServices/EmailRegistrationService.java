@@ -1,11 +1,12 @@
-package com.Grandeur.GranduerBackend.services.impl;
+package com.Grandeur.GranduerBackend.registrationServices;
 
-import com.Grandeur.GranduerBackend.clientRegistration.RegistrationRequest;
+import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationRequest;
 import com.Grandeur.GranduerBackend.emailService.EmailSender;
 import com.Grandeur.GranduerBackend.emailService.EmailValidator;
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.models.Client;
-import com.Grandeur.GranduerBackend.models.ClientRole;
+import com.Grandeur.GranduerBackend.modelEnums.ClientRole;
+import com.Grandeur.GranduerBackend.services.serviceImplementations.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
-public class RegistrationService {
+public class EmailRegistrationService {
 
     private final EmailValidator emailValidator;
 
@@ -42,7 +43,7 @@ public class RegistrationService {
                 )
         );
 
-        String confirmationLink = "http://localhost:8081/api/v1/registration/confirm?token="+token;
+        String confirmationLink = "http://localhost:8080/api/v1/registration/confirm?token="+token;
         emailSender.send(request.getEmail(),
                 buildEmail(request.getName(), confirmationLink)
         );

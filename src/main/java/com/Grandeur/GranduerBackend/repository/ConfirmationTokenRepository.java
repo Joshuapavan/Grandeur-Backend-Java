@@ -1,4 +1,4 @@
-package com.Grandeur.GranduerBackend.Repository;
+package com.Grandeur.GranduerBackend.repository;
 
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;

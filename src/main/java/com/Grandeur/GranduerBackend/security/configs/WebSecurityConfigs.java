@@ -1,8 +1,7 @@
 package com.Grandeur.GranduerBackend.security.configs;
 
 
-import com.Grandeur.GranduerBackend.models.Client;
-import com.Grandeur.GranduerBackend.services.impl.ClientServiceImpl;
+import com.Grandeur.GranduerBackend.services.serviceImplementations.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +27,32 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter {
         // Modifying the existing security provided by spring security //
 
         http
-                .csrf().disable()
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/api/v*/registration/**")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin();
+
+
+                .csrf()
+                .disable()
                 .authorizeRequests()
+
+                // Authentication required to access this api //
                 .antMatchers("/api/v*/registration/**")
                 .permitAll()
+
+                // Authentication required to access this api //
+                .antMatchers("/api/v*/clients/**")
+                .permitAll()
+
+                // making sure that non-authenticated users can only consume data from cars api //
+                .antMatchers("/api/v*/cars/**")
+                .permitAll()
+
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -40,7 +61,7 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 

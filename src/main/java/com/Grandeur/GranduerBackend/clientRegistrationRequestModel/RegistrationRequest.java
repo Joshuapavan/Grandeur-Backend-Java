@@ -1,4 +1,4 @@
-package com.Grandeur.GranduerBackend.clientRegistration;
+package com.Grandeur.GranduerBackend.clientRegistrationRequestModel;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

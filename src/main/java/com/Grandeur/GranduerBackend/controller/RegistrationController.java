@@ -1,25 +1,28 @@
 package com.Grandeur.GranduerBackend.controller;
 
-import com.Grandeur.GranduerBackend.clientRegistration.RegistrationRequest;
-import com.Grandeur.GranduerBackend.services.impl.RegistrationService;
+import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationRequest;
+import com.Grandeur.GranduerBackend.registrationServices.EmailRegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("http://localhost:8080/")
+
 @RestController
 @RequestMapping(path = "api/v1/registration")
+
 @AllArgsConstructor
 public class RegistrationController {
 
-    private final RegistrationService registrationService;
+    private final EmailRegistrationService emailRegistrationService;
 
     @PostMapping
     public String register(@RequestBody RegistrationRequest request){
-        return registrationService.register(request);
+        return emailRegistrationService.register(request);
     }
 
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
+        return emailRegistrationService.confirmToken(token);
     }
 
 }
