@@ -3,6 +3,7 @@ package com.Grandeur.GranduerBackend.registrationServices;
 import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationRequest;
 import com.Grandeur.GranduerBackend.emailService.EmailSender;
 import com.Grandeur.GranduerBackend.emailService.EmailValidator;
+import com.Grandeur.GranduerBackend.exceptions.InvalidEmailException;
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.modelEnums.ClientRole;
@@ -30,7 +31,7 @@ public class EmailRegistrationService {
         boolean iseValidEmail = emailValidator.test(request.getEmail());
 
         if(!iseValidEmail){
-            throw new IllegalStateException("Email not valid");
+            throw new InvalidEmailException("The email "+request.getEmail()+" is invalid");
         }
 
 
@@ -43,7 +44,7 @@ public class EmailRegistrationService {
                 )
         );
 
-        String confirmationLink = "http://localhost:8080/api/v1/registration/confirm?token="+token;
+        String confirmationLink = "http://localhost:8090/api/v1/registration/confirm?token="+token;
 
 
         emailSender.send(request.getEmail(),
