@@ -25,17 +25,24 @@ public class Car {
             generator = "user_sequence"
     )
     private Long id;
+
+    private String sellerName;
+    private String sellerEmail;
     private String brand;
-    private String number;
     private String model;
+    private String number;
 
     @Enumerated(EnumType.STRING)
     private CarType carType;
 
     private String year;
     private String Kms;
+    private String expectedPrice;
     private Boolean insuranceAvailability;
     private String damages;
+
+
+    private String ownerCount;
 
     @Lob
     private byte[] image1;
@@ -58,15 +65,31 @@ public class Car {
 //    private Client client;
 
 
-    public Car(String brand, String number, String model, CarType carType, String year, String kms, Boolean insuranceAvailability, String damages) {
+    public Car(String sellerName
+            ,String sellerEmail
+            ,String brand
+            ,String model
+            ,String number
+            ,String year
+            ,String kms
+            ,String expectedPrice
+            ,String ownerCount
+            ,Boolean insuranceAvailability
+            ,String damages
+            ,CarType carType) {
+
+        this.sellerName = sellerName;
+        this.sellerEmail = sellerEmail;
         this.brand = brand;
         this.number = number;
         this.model = model;
+        this.expectedPrice = expectedPrice;
         this.carType = carType;
         this.year = year;
-        Kms = kms;
+        this.Kms = kms;
         this.insuranceAvailability = insuranceAvailability;
         this.damages = damages;
+        this.ownerCount = ownerCount;
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 
-@CrossOrigin("http://localhost:8080/")
+@CrossOrigin
 
 @RestController   // Specifying it as a rest controller //
 @RequestMapping("/api/v1/clients") // path/ Map to access the Api //
@@ -58,4 +58,9 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK); //  returning the status code //
     }
 
+    @GetMapping("/{email}/{password}")
+    public ResponseEntity<Boolean> isPasswordMatching(@PathVariable("email") String email, @PathVariable("password")String password) {
+        boolean isValidEmail = this.clientService.isValidCredentials(email, password);
+        return new ResponseEntity<>(isValidEmail, HttpStatus.OK);
+    }
 }

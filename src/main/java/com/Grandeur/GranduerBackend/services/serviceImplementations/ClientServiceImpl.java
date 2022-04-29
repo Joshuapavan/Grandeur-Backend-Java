@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,6 +53,19 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     @Override
     public void deleteClientById(Long id) {
         this.clientRepo.deleteClientById(id);
+    }
+
+    @Override
+    public boolean isValidCredentials(String email, String password) {
+        boolean isValidCredentials = false;
+
+        Optional<Client> tempClient = this.clientRepo.findByEmail(email);
+
+//        boolean emailCheck = email
+        boolean passwordCheck = bCryptPasswordEncoder.matches(password,tempClient.get().getPassword());
+
+        return isValidCredentials;
+//        if()
     }
 
 

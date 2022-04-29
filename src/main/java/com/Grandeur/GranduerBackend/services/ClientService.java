@@ -17,4 +17,6 @@ public interface ClientService{
     Client updateClient(Client client);
 
     void deleteClientById(Long id);
+
+    boolean isValidCredentials(String email, String password);
 }

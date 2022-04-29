@@ -13,7 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 
-@CrossOrigin("http://localhost:8080/")
+@CrossOrigin
 
 @RestController
 @RequestMapping("api/v1/cars")
