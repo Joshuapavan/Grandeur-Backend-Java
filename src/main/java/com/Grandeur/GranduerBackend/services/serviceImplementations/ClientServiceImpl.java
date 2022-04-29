@@ -61,11 +61,13 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
         Optional<Client> tempClient = this.clientRepo.findByEmail(email);
 
-//        boolean emailCheck = email
+        boolean emailCheck = tempClient.isPresent();
         boolean passwordCheck = bCryptPasswordEncoder.matches(password,tempClient.get().getPassword());
 
+        if(emailCheck && passwordCheck){
+            isValidCredentials = true;
+        }
         return isValidCredentials;
-//        if()
     }
 
 

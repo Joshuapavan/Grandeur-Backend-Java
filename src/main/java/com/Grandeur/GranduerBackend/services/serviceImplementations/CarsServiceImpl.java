@@ -60,5 +60,10 @@ public class CarsServiceImpl implements CarService {
         return this.carsRepo.getCarByBrand(name);
     }
 
+    @Override
+    public Integer getCountOfCars() {
+        return Math.toIntExact(this.carsRepo.count());
+    }
+
 
 }

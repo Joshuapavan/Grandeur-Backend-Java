@@ -22,7 +22,7 @@ public class ClientController {
 //    @Autowired // dependency injection //
 //    public ClientController(ClientService clientService) {
 //        this.clientService = clientService;
-//    }
+//    }e
 
     // api path to get all the clients //  GET Request //
     @GetMapping

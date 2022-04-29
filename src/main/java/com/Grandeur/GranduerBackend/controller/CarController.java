@@ -67,6 +67,12 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCountOfCars(){
+        Integer carCount = this.carService.getCountOfCars();
+        return new ResponseEntity<Long>(Long.valueOf(carCount), HttpStatus.OK);
+    }
+
 
 
 }
