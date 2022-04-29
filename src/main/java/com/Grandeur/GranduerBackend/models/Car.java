@@ -67,26 +67,6 @@ public class Car {
         Kms = kms;
         this.insuranceAvailability = insuranceAvailability;
         this.damages = damages;
-//        this.client = client;
     }
-
-
-    public Car(String brand, String number, String model, CarType carType, String year, String kms,
-               Boolean insuranceAvailability, String damages, byte[] image1, byte[] image2, byte[] image3, byte[] image4) {
-        this.brand = brand;
-        this.number = number;
-        this.model = model;
-        this.carType = carType;
-        this.year = year;
-        Kms = kms;
-        this.insuranceAvailability = insuranceAvailability;
-        this.damages = damages;
-        this.image1 = image1;
-        this.image2 = image2;
-        this.image3 = image3;
-        this.image4 = image4;
-//        this.client = client;
-    }
-
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 
+
 @Service
 public class CarsServiceImpl implements CarService {
 
@@ -32,20 +33,7 @@ public class CarsServiceImpl implements CarService {
 
     @Override
     public Car addCar(Car car) {
-        Car newCar;
-            newCar = new Car(
-                    car.getBrand(),
-                    car.getNumber(),
-                    car.getModel(),
-                    car.getCarType(),
-                    car.getYear(),
-                    car.getKms(),
-                    car.getInsuranceAvailability(),
-                    car.getDamages()
-//                ,car.getClient()
-            );
-        this.carsRepo.save(newCar);
-        return newCar;
+        return this.carsRepo.save(car);
     }
 
     @Override
