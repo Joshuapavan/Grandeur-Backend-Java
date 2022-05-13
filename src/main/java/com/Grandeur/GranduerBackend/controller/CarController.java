@@ -73,6 +73,4 @@ public class CarController {
         return new ResponseEntity<Long>(Long.valueOf(carCount), HttpStatus.OK);
     }
 
-
-
 }
