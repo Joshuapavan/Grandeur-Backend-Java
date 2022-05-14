@@ -64,13 +64,11 @@ public class ClientController {
 
     @PostMapping("/signIn")
     public ResponseEntity<String> isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
-
-
         if(this.clientService.isValidCredentials(clientDTO).equals("valid")){
             return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>("Invalid Credentials",HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Invalid Credentials",HttpStatus.NOT_FOUND);
         }
     }
 

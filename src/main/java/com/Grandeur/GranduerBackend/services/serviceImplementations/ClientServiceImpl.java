@@ -1,13 +1,13 @@
 package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
 import com.Grandeur.GranduerBackend.controller.ClientDTO;
-import com.Grandeur.GranduerBackend.models.ConfirmationToken;
-import com.Grandeur.GranduerBackend.repository.ClientRepo;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
 import com.Grandeur.GranduerBackend.exceptions.EmailAlreadyTakenException;
 import com.Grandeur.GranduerBackend.models.Client;
-import com.Grandeur.GranduerBackend.services.ClientService;
+import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.registrationServices.ConfirmationTokenService;
+import com.Grandeur.GranduerBackend.repository.ClientRepo;
+import com.Grandeur.GranduerBackend.services.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,16 +57,19 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     }
 
     @Override
-    public String isValidCredentials(ClientDTO clientDTO) {
+    public String isValidCredentials(ClientDTO clientDTO){
+        boolean isValidCredentials = false;
+//
         Optional<Client> tempClient = this.clientRepo.findByEmail(clientDTO.getEmail());
 
         boolean emailCheck = tempClient.isPresent();
-        boolean passwordCheck = bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword());
 
-        if(passwordCheck && emailCheck){
-            return "vaid";
+        isValidCredentials = bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword());
+
+        if(emailCheck && isValidCredentials){
+            return "valid";
         }
-        else{
+        else {
             return "invalid";
         }
     }
@@ -86,8 +88,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
             throw new EmailAlreadyTakenException("Email already taken!");
         }
 
-//        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
-        String encodedPassword = Base64.getEncoder().encodeToString(client.getPassword().getBytes());
+        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
         client.setPassword(encodedPassword);
 
 
