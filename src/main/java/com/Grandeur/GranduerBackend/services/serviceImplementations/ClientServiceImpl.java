@@ -1,28 +1,21 @@
 package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
 import com.Grandeur.GranduerBackend.controller.ClientDTO;
-import com.Grandeur.GranduerBackend.models.ConfirmationToken;
-import com.Grandeur.GranduerBackend.repository.ClientRepo;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
 import com.Grandeur.GranduerBackend.exceptions.EmailAlreadyTakenException;
 import com.Grandeur.GranduerBackend.models.Client;
-import com.Grandeur.GranduerBackend.security.configs.WebSecurityConfigs;
-import com.Grandeur.GranduerBackend.services.ClientService;
+import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.registrationServices.ConfirmationTokenService;
+import com.Grandeur.GranduerBackend.repository.ClientRepo;
+import com.Grandeur.GranduerBackend.services.ClientService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.management.remote.JMXAuthenticator;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
