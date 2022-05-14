@@ -3,17 +3,9 @@ package com.Grandeur.GranduerBackend.controller;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.services.ClientService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-
 
 import java.util.List;
 
@@ -63,12 +55,14 @@ public class ClientController {
     }
 
     @PostMapping("/signIn")
-    public ResponseEntity<String> isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
+    public String isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
         if(this.clientService.isValidCredentials(clientDTO).equals("valid")){
-            return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
+//            return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
+            return "User Signed in Successfully";
         }
         else {
-            return new ResponseEntity<>("Invalid Credentials",HttpStatus.NOT_FOUND);
+//            return new ResponseEntity<>("Invalid Credentials",HttpStatus.NOT_FOUND);
+            return "Invalid Credentials";
         }
     }
 
