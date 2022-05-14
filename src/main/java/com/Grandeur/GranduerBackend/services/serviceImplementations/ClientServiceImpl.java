@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         boolean emailCheck = tempClient.isPresent();
         boolean passwordCheck = bCryptPasswordEncoder.matches(password,tempClient.get().getPassword());
 
-        if(emailCheck && passwordCheck){
+        if(passwordCheck){
             isValidCredentials = true;
         }
         return isValidCredentials;
@@ -84,8 +85,11 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
             throw new EmailAlreadyTakenException("Email already taken!");
         }
 
-        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
+//        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
+        String encodedPassword = Base64.getEncoder().encodeToString(client.getPassword().getBytes());
         client.setPassword(encodedPassword);
+
+
         clientRepo.save(client); // storing it in the database //
 
         String token = UUID.randomUUID().toString();

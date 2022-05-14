@@ -58,9 +58,8 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK); //  returning the status code //
     }
 
-    @GetMapping("/{email}/{password}")
-    public ResponseEntity<Boolean> isPasswordMatching(@PathVariable("email") String email, @PathVariable("password")String password) {
-        boolean isValidEmail = this.clientService.isValidCredentials(email, password);
-        return new ResponseEntity<>(isValidEmail, HttpStatus.OK);
+    @GetMapping("/{email}&{password}")
+    public Boolean isPasswordMatching(@PathVariable("email") String email, @PathVariable("password")String password) {
+        return this.clientService.isValidCredentials(email, password);
     }
 }
