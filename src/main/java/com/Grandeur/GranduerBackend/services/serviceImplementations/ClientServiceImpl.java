@@ -1,5 +1,6 @@
 package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
+import com.Grandeur.GranduerBackend.controller.ClientDTO;
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.repository.ClientRepo;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
@@ -57,18 +58,18 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     }
 
     @Override
-    public boolean isValidCredentials(String email, String password) {
-        boolean isValidCredentials = false;
-
-        Optional<Client> tempClient = this.clientRepo.findByEmail(email);
+    public String isValidCredentials(ClientDTO clientDTO) {
+        Optional<Client> tempClient = this.clientRepo.findByEmail(clientDTO.getEmail());
 
         boolean emailCheck = tempClient.isPresent();
-        boolean passwordCheck = bCryptPasswordEncoder.matches(password,tempClient.get().getPassword());
+        boolean passwordCheck = bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword());
 
-        if(passwordCheck){
-            isValidCredentials = true;
+        if(passwordCheck && emailCheck){
+            return "vaid";
         }
-        return isValidCredentials;
+        else{
+            return "invalid";
+        }
     }
 
 

@@ -64,13 +64,7 @@ public class ClientController {
 
     @PostMapping("/signIn")
     public ResponseEntity<String> isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
-//        Authentication authentication  = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//                client.getEmail(),client.getPassword()
-//        ));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
-//        this.clientService.isValidCredentials()
+
 
         if(this.clientService.isValidCredentials(clientDTO).equals("valid")){
             return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
