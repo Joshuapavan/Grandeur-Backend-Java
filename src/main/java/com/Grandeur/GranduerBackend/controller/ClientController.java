@@ -3,15 +3,23 @@ package com.Grandeur.GranduerBackend.controller;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.services.ClientService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+
 
 import java.util.List;
 
-@AllArgsConstructor
 
 @CrossOrigin
+@AllArgsConstructor
 
 @RestController   // Specifying it as a rest controller //
 @RequestMapping("/api/v1/clients") // path/ Map to access the Api //
@@ -19,10 +27,6 @@ public class ClientController {
 
     private final ClientService clientService;
 
-//    @Autowired // dependency injection //
-//    public ClientController(ClientService clientService) {
-//        this.clientService = clientService;
-//    }e
 
     // api path to get all the clients //  GET Request //
     @GetMapping
@@ -58,8 +62,22 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK); //  returning the status code //
     }
 
-    @GetMapping("/{email}&{password}")
-    public Boolean isPasswordMatching(@PathVariable("email") String email, @PathVariable("password")String password) {
-        return this.clientService.isValidCredentials(email, password);
+    @PostMapping("/signIn")
+    public ResponseEntity<String> isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
+//        Authentication authentication  = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+//                client.getEmail(),client.getPassword()
+//        ));
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
+//        this.clientService.isValidCredentials()
+
+        if(this.clientService.isValidCredentials(clientDTO).equals("valid")){
+            return new ResponseEntity<>("User Signed in Successfully",HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>("Invalid Credentials",HttpStatus.EXPECTATION_FAILED);
+        }
     }
+
 }

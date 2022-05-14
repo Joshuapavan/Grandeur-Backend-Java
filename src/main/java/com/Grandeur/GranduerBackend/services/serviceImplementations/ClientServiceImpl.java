@@ -1,19 +1,26 @@
 package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
+import com.Grandeur.GranduerBackend.controller.ClientDTO;
 import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.repository.ClientRepo;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
 import com.Grandeur.GranduerBackend.exceptions.EmailAlreadyTakenException;
 import com.Grandeur.GranduerBackend.models.Client;
+import com.Grandeur.GranduerBackend.security.configs.WebSecurityConfigs;
 import com.Grandeur.GranduerBackend.services.ClientService;
 import com.Grandeur.GranduerBackend.registrationServices.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.remote.JMXAuthenticator;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -57,18 +64,25 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     }
 
     @Override
-    public boolean isValidCredentials(String email, String password) {
+    public String isValidCredentials(ClientDTO clientDTO){
         boolean isValidCredentials = false;
-
-        Optional<Client> tempClient = this.clientRepo.findByEmail(email);
+//
+        Optional<Client> tempClient = this.clientRepo.findByEmail(clientDTO.getEmail());
 
         boolean emailCheck = tempClient.isPresent();
-        boolean passwordCheck = bCryptPasswordEncoder.matches(password,tempClient.get().getPassword());
 
-        if(passwordCheck){
-            isValidCredentials = true;
+        isValidCredentials = bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword());
+
+//                Authentication authentication  = securityConfigs.authenticationManagerBean().authenticate(new UsernamePasswordAuthenticationToken(
+//                clientDTO.getEmail(),clientDTO.getPassword()
+//        ));
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+        if(emailCheck && isValidCredentials){
+            return "valid";
         }
-        return isValidCredentials;
+        else {
+            return "invalid";
+        }
     }
 
 
@@ -85,8 +99,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
             throw new EmailAlreadyTakenException("Email already taken!");
         }
 
-//        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
-        String encodedPassword = Base64.getEncoder().encodeToString(client.getPassword().getBytes());
+        String encodedPassword = bCryptPasswordEncoder.encode(client.getPassword()); // Encrypting the password //
         client.setPassword(encodedPassword);
 
 

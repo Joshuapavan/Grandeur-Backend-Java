@@ -1,5 +1,6 @@
 package com.Grandeur.GranduerBackend.services;
 
+import com.Grandeur.GranduerBackend.controller.ClientDTO;
 import com.Grandeur.GranduerBackend.models.Client;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,5 @@ public interface ClientService{
 
     void deleteClientById(Long id);
 
-    boolean isValidCredentials(String email, String password);
+    String isValidCredentials(ClientDTO clientDTO) throws Exception;
 }
