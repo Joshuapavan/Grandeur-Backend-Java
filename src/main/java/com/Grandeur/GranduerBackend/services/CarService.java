@@ -22,7 +22,11 @@ public interface CarService {
 
     void addImages(Car car,MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4) throws IOException;
 
+    void addImage(Car car, String image);
+
     List<Car> getCarsByBrand(String name);
 
     Integer getCountOfCars();
+
+    Car getCarBySellerEmail(String email);
 }

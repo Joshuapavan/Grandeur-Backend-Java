@@ -23,4 +23,6 @@ public interface ClientRepo extends JpaRepository<Client,Long> {
     @Query("UPDATE Client a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableClient(String email);
+
+    Optional<Client> getClientByName(String name);
 }

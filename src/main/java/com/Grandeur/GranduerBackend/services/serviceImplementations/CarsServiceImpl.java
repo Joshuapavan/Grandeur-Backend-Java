@@ -48,11 +48,21 @@ public class CarsServiceImpl implements CarService {
 
     @Override
     public void addImages(Car car, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4) throws IOException {
-        car.setImage1(Base64.getEncoder().encode(image1.getBytes()));
+//        car.setImage1(Base64.getEncoder().encode(image1.getBytes()));
         car.setImage2(Base64.getEncoder().encode(image2.getBytes()));
         car.setImage3(Base64.getEncoder().encode(image3.getBytes()));
         car.setImage4(Base64.getEncoder().encode(image4.getBytes()));
         this.carsRepo.save(car);
+    }
+
+//    @Override
+//    public void addImage(Car car, String image) throws IOException {
+//        car.setImage1(image);
+//    }
+
+    @Override
+    public Car getCarBySellerEmail(String email) {
+        return this.carsRepo.getCarBySellerEmail(email);
     }
 
     @Override
@@ -64,6 +74,12 @@ public class CarsServiceImpl implements CarService {
     public Integer getCountOfCars() {
         return Math.toIntExact(this.carsRepo.count());
     }
+
+    @Override
+    public void addImage(Car car, String image1){
+        car.setImage1(image1);
+    }
+
 
 
 }

@@ -1,6 +1,6 @@
 package com.Grandeur.GranduerBackend.services.serviceImplementations;
 
-import com.Grandeur.GranduerBackend.controller.ClientDTO;
+import com.Grandeur.GranduerBackend.DTOmodels.ClientDTO;
 import com.Grandeur.GranduerBackend.exceptions.ClientNotFoundException;
 import com.Grandeur.GranduerBackend.exceptions.EmailAlreadyTakenException;
 import com.Grandeur.GranduerBackend.models.Client;
@@ -58,20 +58,30 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     @Override
     public String isValidCredentials(ClientDTO clientDTO){
-        boolean isValidCredentials = false;
+        boolean isValidCredentials;
 //
         Optional<Client> tempClient = this.clientRepo.findByEmail(clientDTO.getEmail());
 
         boolean emailCheck = tempClient.isPresent();
 
-        isValidCredentials = bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword());
+        isValidCredentials = (emailCheck && bCryptPasswordEncoder.matches(clientDTO.getPassword(),tempClient.get().getPassword()));
 
-        if(emailCheck && isValidCredentials){
+        if (isValidCredentials){
             return "valid";
-        }
-        else {
+        }else {
             return "invalid";
         }
+
+    }
+
+    @Override
+    public Optional<Client> findClientByEmail(String email) {
+        return clientRepo.findByEmail(email);
+    }
+
+    @Override
+    public Optional<Client> getClientByName(String name) {
+        return this.clientRepo.getClientByName(name);
     }
 
 
@@ -110,5 +120,9 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     public int enableClient (String email) {
         return clientRepo.enableClient(email);
+    }
+
+    public Optional<Client> getClientByEmail(String email){
+        return this.clientRepo.findByEmail(email);
     }
 }

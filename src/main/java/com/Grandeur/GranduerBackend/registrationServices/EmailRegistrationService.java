@@ -1,6 +1,8 @@
 package com.Grandeur.GranduerBackend.registrationServices;
 
+import com.Grandeur.GranduerBackend.DTOmodels.NameDTO;
 import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationRequest;
+import com.Grandeur.GranduerBackend.DTOmodels.ClientDTO;
 import com.Grandeur.GranduerBackend.emailService.EmailSender;
 import com.Grandeur.GranduerBackend.emailService.EmailValidator;
 import com.Grandeur.GranduerBackend.exceptions.InvalidEmailException;
@@ -9,10 +11,12 @@ import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.modelEnums.ClientRole;
 import com.Grandeur.GranduerBackend.services.serviceImplementations.ClientServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,14 +31,12 @@ public class EmailRegistrationService {
     private final EmailSender emailSender;
 
 
-    public String register(RegistrationRequest request) {
+    public NameDTO register(RegistrationRequest request) {
         boolean iseValidEmail = emailValidator.test(request.getEmail());
 
         if(!iseValidEmail){
             throw new InvalidEmailException("The email "+request.getEmail()+" is invalid");
         }
-
-
         String token = clientServiceImpl.signUpClient(
                 new Client(
                         request.getName(),
@@ -43,14 +45,20 @@ public class EmailRegistrationService {
                         ClientRole.CLIENT
                 )
         );
-
         String confirmationLink = "http://localhost:8090/api/v1/registration/confirm?token="+token;
-
-
         emailSender.send(request.getEmail(),
                 buildEmail(request.getName(), confirmationLink)
         );
-        return token;
+
+
+        Optional<Client> client = clientServiceImpl.getClientByEmail(request.getEmail());
+
+        if(client.isPresent()) {
+            return new NameDTO(client.get().getName(), client.get().getEmail());
+        }
+        else{
+            throw new UsernameNotFoundException("Did not find any user with the email"+request.getEmail());
+        }
     }
 
     @Transactional
