@@ -55,10 +55,11 @@ public class CarsServiceImpl implements CarService {
         this.carsRepo.save(car);
     }
 
-//    @Override
-//    public void addImage(Car car, String image) throws IOException {
-//        car.setImage1(image);
-//    }
+    @Override
+    public Car addImage(Car car, MultipartFile image) throws IOException {
+        car.setImage1(Base64.getEncoder().encode(image.getBytes()));
+        return this.carsRepo.save(car);
+    }
 
     @Override
     public Car getCarBySellerEmail(String email) {
@@ -75,10 +76,11 @@ public class CarsServiceImpl implements CarService {
         return Math.toIntExact(this.carsRepo.count());
     }
 
-    @Override
-    public void addImage(Car car, String image1){
-        car.setImage1(image1);
-    }
+//    @Override
+//    public Car addImage(Car car, String image1){
+//        car.setImage1(image1);
+//         return this.carsRepo.save(car);
+//    }
 
 
 

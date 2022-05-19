@@ -44,9 +44,9 @@ public class Car {
 
     private String ownerCount;
 
-//    @Lob
-//    private byte[] image1;
-    private String image1;
+    @Lob
+    private byte[] image1;
+//    private String image1;
 
     @Lob
     private byte[] image2;

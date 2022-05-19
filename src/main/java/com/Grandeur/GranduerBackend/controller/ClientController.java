@@ -59,14 +59,13 @@ public class ClientController {
 
     @PostMapping("/signIn")
     public ResponseEntity<NameDTO> isPasswordMatching(@RequestBody ClientDTO clientDTO) throws Exception {
-        if(this.clientService.isValidCredentials(clientDTO).equals("valid")){
+        if(this.clientService.isValidCredentials(clientDTO).equals("valid")) {
             Optional<Client> client = clientService.findClientByEmail(clientDTO.getEmail());
-            return new ResponseEntity<>(new NameDTO(client.get().getName(),client.get().getEmail()),HttpStatus.OK);
-
+            return client.map(value ->
+                    new ResponseEntity<>(new NameDTO(value.getName(), value.getEmail()), HttpStatus.OK))
+                    .orElseGet(() -> new ResponseEntity<>(new NameDTO(), HttpStatus.NOT_FOUND));
         }
-        else {
-            return new ResponseEntity<>(new NameDTO(),HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(new NameDTO(),HttpStatus.BAD_REQUEST);
     }
 
 }

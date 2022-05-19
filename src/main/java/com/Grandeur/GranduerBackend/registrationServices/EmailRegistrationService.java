@@ -46,9 +46,13 @@ public class EmailRegistrationService {
                 )
         );
         String confirmationLink = "http://localhost:8090/api/v1/registration/confirm?token="+token;
-        emailSender.send(request.getEmail(),
-                buildEmail(request.getName(), confirmationLink)
-        );
+
+        Thread thread = new Thread(()->{
+            emailSender.send(request.getEmail(),
+                    buildEmail(request.getName(), confirmationLink)
+            );
+        });
+        thread.start();
 
 
         Optional<Client> client = clientServiceImpl.getClientByEmail(request.getEmail());

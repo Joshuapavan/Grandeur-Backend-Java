@@ -69,16 +69,16 @@ public class CarController {
 
     @PostMapping("/{seller-email}/image1")
     public ResponseEntity<String> addImages(@PathVariable("seller-email") String email
-            , @RequestBody ImageDTO image) {
+            ,@RequestParam("image1") MultipartFile image1) throws IOException {
 
         Car car = carService.getCarBySellerEmail(email);
 
-        if(image == null){
+        if(image1.isEmpty()){
             return new ResponseEntity<>("Upload Failed, Please try again",HttpStatus.NO_CONTENT);
         }
 
         if(car != null) {
-            carService.addImage(car, image.getImage());
+            carService.addImage(car, image1);
             return new ResponseEntity<>("Successfully added the image",HttpStatus.OK);
         }
         if(car == null){
