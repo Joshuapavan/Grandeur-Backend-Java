@@ -6,10 +6,7 @@ import com.Grandeur.GranduerBackend.models.Car;
 import com.Grandeur.GranduerBackend.services.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 
 @AllArgsConstructor
@@ -46,20 +43,6 @@ public class CarsServiceImpl implements CarService {
         this.carsRepo.deleteById(id);
     }
 
-    @Override
-    public void addImages(Car car, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4) throws IOException {
-//        car.setImage1(Base64.getEncoder().encode(image1.getBytes()));
-        car.setImage2(Base64.getEncoder().encode(image2.getBytes()));
-        car.setImage3(Base64.getEncoder().encode(image3.getBytes()));
-        car.setImage4(Base64.getEncoder().encode(image4.getBytes()));
-        this.carsRepo.save(car);
-    }
-
-    @Override
-    public Car addImage(Car car, MultipartFile image) throws IOException {
-        car.setImage1(Base64.getEncoder().encode(image.getBytes()));
-        return this.carsRepo.save(car);
-    }
 
     @Override
     public Car getCarBySellerEmail(String email) {

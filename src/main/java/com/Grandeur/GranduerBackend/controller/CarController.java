@@ -1,6 +1,5 @@
 package com.Grandeur.GranduerBackend.controller;
 
-import com.Grandeur.GranduerBackend.DTOmodels.ImageDTO;
 import com.Grandeur.GranduerBackend.models.Car;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.services.CarService;
@@ -9,9 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,41 +51,6 @@ public class CarController {
         }
     }
 
-
-//    @PostMapping("/{id}/images")
-//    public ResponseEntity<?> addImages(@PathVariable("id") Long id
-//            ,@RequestParam("image1") MultipartFile image1
-//            ,@RequestParam("image2") MultipartFile image2
-//            ,@RequestParam("image3") MultipartFile image3
-//            ,@RequestParam("image4") MultipartFile image4)  throws IOException {
-//
-//        Car newCar = carService.getCarById(id);
-//        carService.addImages(newCar,image1,image2,image3,image4);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
-    @PostMapping("/{seller-email}/image1")
-    public ResponseEntity<String> addImages(@PathVariable("seller-email") String email
-            ,@RequestParam("image1") MultipartFile image1) throws IOException {
-
-        Car car = carService.getCarBySellerEmail(email);
-
-        if(image1.isEmpty()){
-            return new ResponseEntity<>("Upload Failed, Please try again",HttpStatus.NO_CONTENT);
-        }
-
-        if(car != null) {
-            carService.addImage(car, image1);
-            return new ResponseEntity<>("Successfully added the image",HttpStatus.OK);
-        }
-        if(car == null){
-            return new ResponseEntity<>("Cannot find Seller with the email "+email,HttpStatus.NOT_FOUND);
-        }
-        else {
-            return new ResponseEntity<>("Unable to add the image", HttpStatus.NOT_ACCEPTABLE);
-        }
-
-    }
 
     @PutMapping
     public ResponseEntity<Car> updateCar(@RequestBody Car car){

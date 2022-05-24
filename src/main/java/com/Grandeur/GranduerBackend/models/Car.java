@@ -1,15 +1,19 @@
 package com.Grandeur.GranduerBackend.models;
 
 import com.Grandeur.GranduerBackend.modelEnums.CarType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 
 @Entity(name = "Cars")
 public class Car {
@@ -40,30 +44,8 @@ public class Car {
     private String expectedPrice;
     private Boolean insuranceAvailability;
     private String damages;
-
-
     private String ownerCount;
-
-    @Lob
-    private byte[] image1;
-//    private String image1;
-
-    @Lob
-    private byte[] image2;
-
-    @Lob
-    private byte[] image3;
-
-    @Lob
-    private byte[] image4;
-
-
-//    @ManyToOne
-//    @JoinColumn(
-//            nullable = false,
-//            name = "client_id"
-//    )
-//    private Client client;
+    private String imageURL;
 
 
     public Car(String sellerName
@@ -76,6 +58,7 @@ public class Car {
             ,String expectedPrice
             ,String ownerCount
             ,Boolean insuranceAvailability
+            ,String imageURL
             ,String damages
             ,CarType carType) {
 
@@ -89,8 +72,21 @@ public class Car {
         this.year = year;
         this.Kms = kms;
         this.insuranceAvailability = insuranceAvailability;
+        this.imageURL = imageURL;
         this.damages = damages;
         this.ownerCount = ownerCount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Car car = (Car) o;
+        return id != null && Objects.equals(id, car.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
