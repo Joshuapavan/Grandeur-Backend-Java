@@ -104,7 +104,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         ConfirmationToken confirmationToken =  new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(1),
+                LocalDateTime.now().plusMinutes(15),
                 client
         );
 
