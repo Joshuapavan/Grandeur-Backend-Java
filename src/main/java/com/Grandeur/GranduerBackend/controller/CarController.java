@@ -1,5 +1,6 @@
 package com.Grandeur.GranduerBackend.controller;
 
+import com.Grandeur.GranduerBackend.DTOmodels.SearchDTO;
 import com.Grandeur.GranduerBackend.models.Car;
 import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.services.CarService;
@@ -9,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -34,16 +37,35 @@ public class CarController {
         return new ResponseEntity<>(this.carService.getCarById(id),HttpStatus.FOUND);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<List<Car>>getCarsByBrandName(@PathVariable("name") String name){
-        return new ResponseEntity<>(this.carService.getCarsByBrand(name),HttpStatus.OK);
+    @PostMapping("/search")
+    public ResponseEntity<List<Car>>searchCar(@RequestBody SearchDTO searchDTO){
+       List<Car> cars = this.carService.getAllCars();
+       List<Car>  searchResult = cars.stream()
+               .filter(car -> car.getBrand().equalsIgnoreCase(searchDTO.getBrand()))
+               .toList();
+
+       if(!searchResult.isEmpty()){
+           return new ResponseEntity<>(searchResult,HttpStatus.OK);
+       }else {
+           return new ResponseEntity<>(searchResult,HttpStatus.BAD_REQUEST);
+       }
     }
+
+//    @GetMapping("/{name}")
+//    public ResponseEntity<Car>getCarsByBrandName(@PathVariable("name") String name){
+////       if(this.carService.searchCar(name) != null){
+////           return new ResponseEntity<>(this.carService.searchCar(name),HttpStatus.OK);
+////       }else {
+////           return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_REQUEST);
+////       }
+//        return new ResponseEntity<>(this.carService.getCarByName(name),HttpStatus.OK);
+//    }
 
     @PostMapping("/{seller-email}")
     public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Car car){
         Optional<Client> client = this.clientService.findClientByEmail(email);
         if(client.isPresent()){
-            Car newCar = this.carService.addCar(car);
+            this.carService.addCar(car);
             return new ResponseEntity<>("Added car!",HttpStatus.CREATED);
         }
         else{
@@ -62,12 +84,6 @@ public class CarController {
     public ResponseEntity<?> deleteCar(@PathVariable("id") Long id){
         this.carService.deleteCarById(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Long> getCountOfCars(){
-        Integer carCount = this.carService.getCountOfCars();
-        return new ResponseEntity<Long>(Long.valueOf(carCount), HttpStatus.OK);
     }
 
 }

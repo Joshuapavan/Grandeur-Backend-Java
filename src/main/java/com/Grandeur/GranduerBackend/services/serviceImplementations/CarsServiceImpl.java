@@ -44,27 +44,24 @@ public class CarsServiceImpl implements CarService {
     }
 
 
-    @Override
-    public Car getCarBySellerEmail(String email) {
-        return this.carsRepo.getCarBySellerEmail(email);
-    }
+//    @Override
+//    public Car getCarBySellerEmail(String email) {
+//        return this.carsRepo.getCarBySellerEmail(email);
+//    }
 
     @Override
-    public List<Car> getCarsByBrand(String name) {
-        return this.carsRepo.getCarByBrand(name);
-    }
-
-    @Override
-    public Integer getCountOfCars() {
-        return Math.toIntExact(this.carsRepo.count());
+    public List<Car> searchCar(String name, String model) {
+        return this.carsRepo.findByBrandContainingIgnoreCase(name);
     }
 
 //    @Override
-//    public Car addImage(Car car, String image1){
-//        car.setImage1(image1);
-//         return this.carsRepo.save(car);
+//    public List<Car> getCarsByBrand(String name) {
+//        return this.carsRepo.getCarByBrand(name);
 //    }
 
-
+//    @Override
+//    public Integer getCountOfCars() {
+//        return Math.toIntExact(this.carsRepo.count());
+//    }
 
 }

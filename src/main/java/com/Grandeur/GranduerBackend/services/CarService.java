@@ -17,10 +17,5 @@ public interface CarService {
     Car updateCar(Car car);
 
     void deleteCarById(Long id);
-
-    List<Car> getCarsByBrand(String name);
-
-    Integer getCountOfCars();
-
-    Car getCarBySellerEmail(String email);
+    List<Car> searchCar(String name, String model);
 }

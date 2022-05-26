@@ -14,9 +14,7 @@ public interface CarsRepo extends JpaRepository<Car,Long> {
 
     List<Car> getCarByBrand(String name);
 
-    long count();
-
     Car getCarBySellerEmail(String email);
 
-//    Optional<Client> getClientByEmail(String email);
+    List<Car> findByBrandContainingIgnoreCase(String name);
 }
