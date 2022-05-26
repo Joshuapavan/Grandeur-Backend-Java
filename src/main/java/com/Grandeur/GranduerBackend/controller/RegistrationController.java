@@ -21,7 +21,6 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<NameDTO> register(@RequestBody RegistrationRequest request){
-//        return emailRegistrationService.register(request);
         return new ResponseEntity<>(emailRegistrationService.register(request), HttpStatus.OK);
     }
 

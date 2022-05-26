@@ -24,5 +24,4 @@ public interface ClientService{
 
     Optional<Client> findClientByEmail(String email);
 
-    Optional<Client> getClientByName(String name);
 }

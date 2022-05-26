@@ -5,9 +5,9 @@ import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationR
 import com.Grandeur.GranduerBackend.emailService.EmailSender;
 import com.Grandeur.GranduerBackend.emailService.EmailValidator;
 import com.Grandeur.GranduerBackend.exceptions.InvalidEmailException;
-import com.Grandeur.GranduerBackend.models.ConfirmationToken;
-import com.Grandeur.GranduerBackend.models.Client;
 import com.Grandeur.GranduerBackend.modelEnums.ClientRole;
+import com.Grandeur.GranduerBackend.models.Client;
+import com.Grandeur.GranduerBackend.models.ConfirmationToken;
 import com.Grandeur.GranduerBackend.services.serviceImplementations.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,8 @@ public class EmailRegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
 
     private final EmailSender emailSender;
+
+
 
 
     public NameDTO register(RegistrationRequest request) {
@@ -44,6 +47,7 @@ public class EmailRegistrationService {
                         ClientRole.CLIENT
                 )
         );
+        String email = request.getEmail();
         String confirmationLink = "http://localhost:8090/api/v1/registration/confirm?token="+token;
 
         Thread thread = new Thread(()->{
@@ -79,12 +83,31 @@ public class EmailRegistrationService {
 
         if(expiredAt.isBefore(LocalDateTime.now())){
             confirmationTokenService.deleteConfirmationToken(token);
+            return "<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "  <meta charset=\"UTF-8\">\n" +
+                    "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                    "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                    "  <link href=\"https://fonts.googleapis.com/css2?family=Poppins&display=swap\" rel=\"stylesheet\">\n" +
+                    "  <title>Email Confirmation Error</title>\n" +
+                    "  <style>\n" +
+                    "    * {\n" +
+                    "      font-family: 'Poppins', sans-serif;\n" +
+                    "      padding: 5px;\n" +
+                    "      text-align: center;\n" +
+                    "    }\n" +
+                    "  </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "  <div class=\"container\">\n" +
+                    "    <h1>OOPS! Token Has Expired Please Try Signing Again</h1>\n" +
+                    "    <p>Signup Link : <a href=\"http://127.0.0.1:5501/sign-up/signUp.html\">Grandeur-Home</a></p>\n" +
+                    "  </div>\n" +
+                    "</body>\n" +
+                    "</html>";
         }
-
-        confirmationTokenService.setConfirmedAt(token);
-        clientServiceImpl.enableClient(
-                confirmationToken.getClient().getEmail()
-        );
 
         return "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -106,11 +129,12 @@ public class EmailRegistrationService {
                 "<body>\n" +
                 "  <div class=\"container\">\n" +
                 "    <h1>THANK YOU! Your Account is verified...</h1>\n" +
-                "    <p>Continue to our website<a href=\"#\">Grandeur</a></p>\n" +
+                "    <p>Continue to our website<a href=\"http://127.0.0.1:5501/home/home.html\">Grandeur-Signup</a></p>\n" +
                 "  </div>\n" +
                 "</body>\n" +
                 "</html>";
     }
+
 
     private String buildEmail(String name, String link) {
         return "<!DOCTYPE html>\n" +

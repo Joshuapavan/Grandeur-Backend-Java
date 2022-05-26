@@ -25,4 +25,5 @@ public interface ClientRepo extends JpaRepository<Client,Long> {
     int enableClient(String email);
 
     Optional<Client> getClientByName(String name);
+
 }

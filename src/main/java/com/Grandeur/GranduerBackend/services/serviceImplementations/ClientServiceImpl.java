@@ -79,10 +79,6 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         return clientRepo.findByEmail(email);
     }
 
-    @Override
-    public Optional<Client> getClientByName(String name) {
-        return this.clientRepo.getClientByName(name);
-    }
 
 
     @Override
@@ -108,7 +104,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         ConfirmationToken confirmationToken =  new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
+                LocalDateTime.now().plusMinutes(1),
                 client
         );
 
