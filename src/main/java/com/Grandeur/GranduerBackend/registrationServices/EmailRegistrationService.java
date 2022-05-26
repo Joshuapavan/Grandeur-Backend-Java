@@ -2,7 +2,6 @@ package com.Grandeur.GranduerBackend.registrationServices;
 
 import com.Grandeur.GranduerBackend.DTOmodels.NameDTO;
 import com.Grandeur.GranduerBackend.clientRegistrationRequestModel.RegistrationRequest;
-import com.Grandeur.GranduerBackend.DTOmodels.ClientDTO;
 import com.Grandeur.GranduerBackend.emailService.EmailSender;
 import com.Grandeur.GranduerBackend.emailService.EmailValidator;
 import com.Grandeur.GranduerBackend.exceptions.InvalidEmailException;
@@ -79,7 +78,7 @@ public class EmailRegistrationService {
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if(expiredAt.isBefore(LocalDateTime.now())){
-            throw new IllegalStateException("token expired");
+            confirmationTokenService.deleteConfirmationToken(token);
         }
 
         confirmationTokenService.setConfirmedAt(token);

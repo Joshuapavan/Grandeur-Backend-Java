@@ -22,8 +22,13 @@ public class ConfirmationTokenService {
         confirmationTokenRepository.save(token);
     }
 
-    public int setConfirmedAt(String token) {
-        return confirmationTokenRepository.updateConfirmedAt(
+    public void setConfirmedAt(String token) {
+        confirmationTokenRepository.updateConfirmedAt(
                 token, LocalDateTime.now());
+    }
+
+    public void deleteConfirmationToken(String token){
+        Optional<ConfirmationToken> confirmationToken = confirmationTokenRepository.findByToken(token);
+        confirmationToken.ifPresent(value -> confirmationTokenRepository.deleteById(value.getId()));
     }
 }
