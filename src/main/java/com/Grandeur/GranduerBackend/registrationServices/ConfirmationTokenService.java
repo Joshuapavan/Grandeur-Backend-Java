@@ -31,8 +31,8 @@ public class ConfirmationTokenService {
 
     public void deleteConfirmationToken(String token){
         Optional<ConfirmationToken> confirmationToken = confirmationTokenRepository.findByToken(token);
-        confirmationToken.ifPresent(value -> confirmationTokenRepository.deleteById(value.getId()));
-        if(confirmationToken.isPresent()) {
+        if(confirmationToken.get().getConfirmedAt() == null){
+            confirmationToken.ifPresent(value -> confirmationTokenRepository.deleteById(value.getId()));
             Long id = confirmationToken.get().getClient().getId();
             clientRepo.deleteClientById(id);
         }
