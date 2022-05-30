@@ -54,13 +54,9 @@ public class CarController {
     @PostMapping("/{seller-email}")
     public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Car car){
         Optional<Client> client = this.clientService.findClientByEmail(email);
-        if(client.isPresent() && client.get().getEnabled()){
+        if(client.isPresent()){
             this.carService.addCar(car);
             return new ResponseEntity<>("Added car!",HttpStatus.CREATED);
-        }
-        else if(!client.get().getEnabled()){
-            return new ResponseEntity<>("Your account is not verified please, signup again!",HttpStatus.NOT_FOUND);
-
         }
         else {
             return new ResponseEntity<>("Please create an account to create car!",HttpStatus.NOT_FOUND);
