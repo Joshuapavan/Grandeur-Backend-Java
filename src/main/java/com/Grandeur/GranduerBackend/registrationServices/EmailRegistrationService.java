@@ -103,7 +103,7 @@ public class EmailRegistrationService {
                     "<body>\n" +
                     "  <div class=\"container\">\n" +
                     "    <h1>OOPS! Token Has Expired Please Try Signing Again</h1>\n" +
-                    "    <p>Signup Link : <a href=\"http://127.0.0.1:5501/sign-up/signUp.html\">Grandeur-Home</a></p>\n" +
+                    "    <p>Signup Link : <a href=\"http://127.0.0.1:5500/sign-up/signUp.html\">Grandeur-Home</a></p>\n" +
                     "  </div>\n" +
                     "</body>\n" +
                     "</html>";
@@ -129,7 +129,7 @@ public class EmailRegistrationService {
                 "<body>\n" +
                 "  <div class=\"container\">\n" +
                 "    <h1>THANK YOU! Your Account is verified...</h1>\n" +
-                "    <p>Continue to our website<a href=\"http://127.0.0.1:5501/home/home.html\">Grandeur-Signup</a></p>\n" +
+                "    <p>Continue to our website<a href=\"http://127.0.0.1:5500/home/home.html\">Grandeur-Home</a></p>\n" +
                 "  </div>\n" +
                 "</body>\n" +
                 "</html>";

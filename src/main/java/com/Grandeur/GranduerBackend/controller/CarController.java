@@ -10,10 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -26,6 +24,8 @@ public class CarController {
     private final CarService carService;
 
     private final ClientService clientService;
+
+//    private final EmailRegistrationService emailRegistrationService;
 
     @GetMapping
     public ResponseEntity<List<Car>> getAllCars(){
@@ -51,25 +51,20 @@ public class CarController {
        }
     }
 
-//    @GetMapping("/{name}")
-//    public ResponseEntity<Car>getCarsByBrandName(@PathVariable("name") String name){
-////       if(this.carService.searchCar(name) != null){
-////           return new ResponseEntity<>(this.carService.searchCar(name),HttpStatus.OK);
-////       }else {
-////           return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_REQUEST);
-////       }
-//        return new ResponseEntity<>(this.carService.getCarByName(name),HttpStatus.OK);
-//    }
-
     @PostMapping("/{seller-email}")
     public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Car car){
         Optional<Client> client = this.clientService.findClientByEmail(email);
-        if(client.isPresent()){
+        if(client.isPresent() && client.get().getEnabled()){
             this.carService.addCar(car);
             return new ResponseEntity<>("Added car!",HttpStatus.CREATED);
         }
-        else{
-            return new ResponseEntity<>("Please create an account to add cars",HttpStatus.NOT_FOUND);
+        else if(!client.get().getEnabled()){
+            return new ResponseEntity<>("Your account is not verified please, signup again!",HttpStatus.NOT_FOUND);
+
+        }
+        else {
+            return new ResponseEntity<>("Please create an account to create car!",HttpStatus.NOT_FOUND);
+
         }
     }
 
