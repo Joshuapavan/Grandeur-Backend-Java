@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class CarDTO implements Serializable {
+public class InstrumentDTO implements Serializable {
     @NotNull
     private String carName;
 }

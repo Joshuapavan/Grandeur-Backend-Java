@@ -1,6 +1,6 @@
 package com.Grandeur.GranduerBackend.models;
 
-import com.Grandeur.GranduerBackend.modelEnums.CarType;
+import com.Grandeur.GranduerBackend.modelEnums.instrumentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Entity(name = "Cars")
-public class Car {
+@Entity(name = "instruments")
+public class Instrument {
 
     @Id
     @SequenceGenerator(
@@ -37,52 +37,42 @@ public class Car {
     private String number;
 
     @Enumerated(EnumType.STRING)
-    private CarType carType;
+    private instrumentType instrumentType;
 
     private String year;
-    private String Kms;
-    private String expectedPrice;
-    private Boolean insuranceAvailability;
+
+    private String price;
     private String damages;
-    private String ownerCount;
     private String imageURL;
 
 
-    public Car(String sellerName
-            ,String sellerEmail
-            ,String brand
-            ,String model
-            ,String number
-            ,String year
-            ,String kms
-            ,String expectedPrice
-            ,String ownerCount
-            ,Boolean insuranceAvailability
-            ,String imageURL
-            ,String damages
-            ,CarType carType) {
+    public Instrument(String sellerName
+            , String sellerEmail
+            , String brand
+            , String model
+            , String year
+            , String price
+            , String imageURL
+            , String damages
+            , instrumentType instrumentType) {
 
         this.sellerName = sellerName;
         this.sellerEmail = sellerEmail;
         this.brand = brand;
-        this.number = number;
         this.model = model;
-        this.expectedPrice = expectedPrice;
-        this.carType = carType;
+        this.price = price;
+        this.instrumentType = instrumentType;
         this.year = year;
-        this.Kms = kms;
-        this.insuranceAvailability = insuranceAvailability;
         this.imageURL = imageURL;
         this.damages = damages;
-        this.ownerCount = ownerCount;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Car car = (Car) o;
-        return id != null && Objects.equals(id, car.id);
+        Instrument instrument = (Instrument) o;
+        return id != null && Objects.equals(id, instrument.id);
     }
 
     @Override

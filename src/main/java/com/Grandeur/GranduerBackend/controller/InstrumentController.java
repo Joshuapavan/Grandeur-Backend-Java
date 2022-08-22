@@ -1,10 +1,10 @@
 package com.Grandeur.GranduerBackend.controller;
 
 import com.Grandeur.GranduerBackend.DTOmodels.SearchDTO;
-import com.Grandeur.GranduerBackend.models.Car;
+import com.Grandeur.GranduerBackend.models.Instrument;
 import com.Grandeur.GranduerBackend.models.Client;
-import com.Grandeur.GranduerBackend.services.CarService;
 import com.Grandeur.GranduerBackend.services.ClientService;
+import com.Grandeur.GranduerBackend.services.InstrumentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,29 +18,29 @@ import java.util.Optional;
 @CrossOrigin
 
 @RestController
-@RequestMapping("api/v1/cars")
-public class CarController {
+@RequestMapping("api/v1/instruments")
+public class InstrumentController {
 
-    private final CarService carService;
+    private final InstrumentService instrumentService;
 
     private final ClientService clientService;
 
 //    private final EmailRegistrationService emailRegistrationService;
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAllCars(){
-        return new ResponseEntity<>(this.carService.getAllCars(), HttpStatus.OK);
+    public ResponseEntity<List<Instrument>> getAllCars(){
+        return new ResponseEntity<>(this.instrumentService.getAllCars(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(this.carService.getCarById(id),HttpStatus.FOUND);
+    public ResponseEntity<Instrument> getCarById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(this.instrumentService.getCarById(id),HttpStatus.FOUND);
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Car>>searchCar(@RequestBody SearchDTO searchDTO){
-       List<Car> cars = this.carService.getAllCars();
-       List<Car>  searchResult = cars.stream()
+    public ResponseEntity<List<Instrument>>searchCar(@RequestBody SearchDTO searchDTO){
+       List<Instrument> instruments = this.instrumentService.getAllCars();
+       List<Instrument>  searchResult = instruments.stream()
                .filter(car -> car.getBrand().equalsIgnoreCase(searchDTO.getBrand()))
                .toList();
 
@@ -52,10 +52,10 @@ public class CarController {
     }
 
     @PostMapping("/{seller-email}")
-    public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Car car){
+    public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Instrument instrument){
         Optional<Client> client = this.clientService.findClientByEmail(email);
         if(client.isPresent()){
-            this.carService.addCar(car);
+            this.instrumentService.addCar(instrument);
             return new ResponseEntity<>("Added car!",HttpStatus.CREATED);
         }
         else {
@@ -66,14 +66,14 @@ public class CarController {
 
 
     @PutMapping
-    public ResponseEntity<Car> updateCar(@RequestBody Car car){
-        Car updatedCar = this.carService.updateCar(car);
-        return new ResponseEntity<>(updatedCar,HttpStatus.OK);
+    public ResponseEntity<Instrument> updateCar(@RequestBody Instrument instrument){
+        Instrument updatedInstrument = this.instrumentService.updateCar(instrument);
+        return new ResponseEntity<>(updatedInstrument,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable("id") Long id){
-        this.carService.deleteCarById(id);
+        this.instrumentService.deleteCarById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

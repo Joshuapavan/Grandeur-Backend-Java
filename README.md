@@ -14,12 +14,12 @@ Registration/ Signup -> (POST) http://localhost:8080/api/v1/registration
 Client APIs -> (GET/POST) http://localhost:8080/api/v1/clients
 Client APIs -> (GET/PATCH) http://localhost:8080/api/v1/clients/{id}
 
-Cars API -> (GET/POST) http://localhost:8080/api/v1/cars or http://localhost:8080/api/v1/cars/{id}
-Cars API -> (GET) http://localhost:8080/api/v1/cars/{name} (name = brandName)
+Cars API -> (GET/POST) http://localhost:8080/api/v1/instruments or http://localhost:8080/api/v1/instruments/{id}
+Cars API -> (GET) http://localhost:8080/api/v1/instruments/{name} (name = brandName)
          
-Car Images API -> (POST) http://localhost:8080/api/v1/cars/{id}/images 
+Car Images API -> (POST) http://localhost:8080/api/v1/instruments/{id}/images 
 
 Features to implemented.
 
-1. Apply Relationships between car and client entities.
+1. Apply Relationships between instrument and client entities.
 2. Unit Tests.
