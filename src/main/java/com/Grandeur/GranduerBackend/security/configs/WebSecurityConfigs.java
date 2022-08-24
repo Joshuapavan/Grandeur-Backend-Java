@@ -51,7 +51,7 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 // making sure that non-authenticated users can only consume data from cars api //
-                .antMatchers("/api/v*/cars/**")
+                .antMatchers("/api/v*/instruments/**")
                 .permitAll()
 
                 .anyRequest()

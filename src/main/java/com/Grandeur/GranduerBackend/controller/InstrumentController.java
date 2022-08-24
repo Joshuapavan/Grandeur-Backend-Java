@@ -21,27 +21,27 @@ import java.util.Optional;
 @RequestMapping("api/v1/instruments")
 public class InstrumentController {
 
-    private final InstrumentService instrumentService;
+    private final InstrumentService InstrumentService;
 
     private final ClientService clientService;
 
 //    private final EmailRegistrationService emailRegistrationService;
 
     @GetMapping
-    public ResponseEntity<List<Instrument>> getAllCars(){
-        return new ResponseEntity<>(this.instrumentService.getAllCars(), HttpStatus.OK);
+    public ResponseEntity<List<Instrument>> getAllInstruments(){
+        return new ResponseEntity<>(this.InstrumentService.getAllInstrument(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Instrument> getCarById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(this.instrumentService.getCarById(id),HttpStatus.FOUND);
+    public ResponseEntity<Instrument> getInstrumentById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(this.InstrumentService.getInstrumentById(id),HttpStatus.FOUND);
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Instrument>>searchCar(@RequestBody SearchDTO searchDTO){
-       List<Instrument> instruments = this.instrumentService.getAllCars();
-       List<Instrument>  searchResult = instruments.stream()
-               .filter(car -> car.getBrand().equalsIgnoreCase(searchDTO.getBrand()))
+    public ResponseEntity<List<Instrument>>searchInstrument(@RequestBody SearchDTO searchDTO){
+       List<Instrument> Instruments = this.InstrumentService.getAllInstruments();
+       List<Instrument>  searchResult = Instruments.stream()
+               .filter(Instrument -> Instrument.getBrand().equalsIgnoreCase(searchDTO.getBrand()))
                .toList();
 
        if(!searchResult.isEmpty()){
@@ -52,28 +52,27 @@ public class InstrumentController {
     }
 
     @PostMapping("/{seller-email}")
-    public ResponseEntity<String> addCar(@PathVariable("seller-email") String email,@RequestBody Instrument instrument){
+    public ResponseEntity<String> addInstrument(@PathVariable("seller-email") String email,@RequestBody Instrument Instrument){
         Optional<Client> client = this.clientService.findClientByEmail(email);
         if(client.isPresent()){
-            this.instrumentService.addCar(instrument);
-            return new ResponseEntity<>("Added car!",HttpStatus.CREATED);
+            this.InstrumentService.addInstrument(Instrument);
+            return new ResponseEntity<>("Added Instrument!",HttpStatus.CREATED);
         }
         else {
-            return new ResponseEntity<>("Please create an account to create car!",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Please create an account to create Instrument!",HttpStatus.NOT_FOUND);
 
         }
     }
 
-
     @PutMapping
-    public ResponseEntity<Instrument> updateCar(@RequestBody Instrument instrument){
-        Instrument updatedInstrument = this.instrumentService.updateCar(instrument);
+    public ResponseEntity<Instrument> updateInstrument(@RequestBody Instrument Instrument){
+        Instrument updatedInstrument = this.InstrumentService.updateInstrument(Instrument);
         return new ResponseEntity<>(updatedInstrument,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable("id") Long id){
-        this.instrumentService.deleteCarById(id);
+    public ResponseEntity<?> deleteInstrument(@PathVariable("id") Long id){
+        this.InstrumentService.deleteInstrumentById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

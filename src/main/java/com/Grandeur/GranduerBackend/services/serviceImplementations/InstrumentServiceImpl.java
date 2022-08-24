@@ -23,23 +23,35 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public Instrument getCarById(Long id) {
+    public Instrument getInstrumentsById(Long id) {
+        return this.instrumentRepo.getInstrumentById(id)
+                .orElseThrow(() -> new InstrumentNotFoundException("Car with id : "+id+" doesn't Exist."));
+    }
+
+
+    @Override
+    public List<Instrument> getAllInstruments() {
+        return this.instrumentRepo.findAll();
+    }
+
+    @Override
+    public Instrument getInstrumentById(Long id) {
         return this.instrumentRepo.getInstrumentById(id)
                 .orElseThrow(() -> new InstrumentNotFoundException("Car with id : "+id+" doesn't Exist."));
     }
 
     @Override
-    public Instrument addCar(Instrument instrument) {
+    public Instrument addInstrument(Instrument instrument) {
         return this.instrumentRepo.save(instrument);
     }
 
     @Override
-    public Instrument updateCar(Instrument instrument) {
+    public Instrument updateInstrument(Instrument instrument) {
         return this.instrumentRepo.save(instrument);
     }
 
     @Override
-    public void deleteCarById(Long id) {
+    public void deleteInstrumentById(Long id) {
         this.instrumentRepo.deleteById(id);
     }
 
